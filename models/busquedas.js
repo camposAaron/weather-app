@@ -1,10 +1,10 @@
 'use strict';
 const axios = require('axios');
-const { throwError } = require('rxjs');
+
 
 class Busqueda {
 
-    historial = ['Tegucigalpa', 'Madrid', 'San José'];
+    historial = []; //5 maximo
     results = {};
     data = {};
 
@@ -25,7 +25,7 @@ class Busqueda {
         return {
             appid: process.env.OPENWEATHER,
             lang: 'es',
-            units: 'metric'
+            units: 'Metric'
         }
     }
 
@@ -77,6 +77,18 @@ class Busqueda {
             console.log('error: NO se encontraron datos para la ciudad seleccionada');
             return [];
         }
+    }
+
+
+     inHistory(placeSelected){
+        if(this.historial.length === 5 ){
+            this.historial.shift();
+        }   
+        this.historial.push(placeSelected);
+    }
+
+    get History(){
+        return this.historial;
     }
 
 }
